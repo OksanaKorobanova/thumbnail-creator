@@ -13,19 +13,38 @@ import {
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import FileUploader from './FileUploader';
+import ReactIcon from '../assets/technologies/react.svg?react';
+import AwsIcon from '../assets/technologies/aws.svg?react';
+import Css3Icon from '../assets/technologies/css3.svg?react';
+import CypressIcon from '../assets/technologies/cypress.svg?react';
+import Html5Icon from '../assets/technologies/html5.svg?react';
+import JestIcon from '../assets/technologies/jest.svg?react';
+import JsIcon from '../assets/technologies/js.svg?react';
+import MuiIcon from '../assets/technologies/mui.svg?react';
+import NextJsIcon from '../assets/technologies/next-js.svg?react';
+import PrismicIcon from '../assets/technologies/prismic.svg?react';
+import RtkIcon from '../assets/technologies/rtk.svg?react';
+import TailwindIcon from '../assets/technologies/tailwind.svg?react';
+import TsIcon from '../assets/technologies/ts.svg?react';
 
 type Skill = {
   title: string;
-  icon: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
 };
 const SKILLS: Skill[] = [
-  { title: 'React', icon: '' },
-  { title: 'Next.js', icon: '' },
-  { title: 'Typescript', icon: '' },
-  { title: 'Redux', icon: '' },
-  { title: 'Tailwind CSS', icon: '' },
-  { title: 'Material UI', icon: '' },
-  { title: 'Prismic', icon: '' },
+  { title: 'React', icon: ReactIcon },
+  { title: 'Next.js', icon: NextJsIcon },
+  { title: 'Typescript', icon: TsIcon },
+  { title: 'Redux', icon: RtkIcon },
+  { title: 'Tailwind CSS', icon: TailwindIcon },
+  { title: 'Material UI', icon: MuiIcon },
+  { title: 'AWS', icon: AwsIcon },
+  { title: 'CSS3', icon: Css3Icon },
+  { title: 'HTML5', icon: Html5Icon },
+  { title: 'Js', icon: JsIcon },
+  { title: 'Cypress', icon: CypressIcon },
+  { title: 'Jest', icon: JestIcon },
+  { title: 'Prismic', icon: PrismicIcon },
 ];
 
 const ThumbnailCreator: React.FC = () => {
@@ -94,17 +113,25 @@ const ThumbnailCreator: React.FC = () => {
               />
             </div>
             {/* Skills selection */}
-            <ToggleGroup type='multiple' variant='outline' className='mt-4'>
-              {SKILLS.map((item) => (
-                <ToggleGroupItem
-                  key={item.title}
-                  onClick={() => handleIconSelection(item)}
-                  value={item.title}
-                  aria-label='Toggle bold'>
-                  {item.title}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
+            <div className='grid w-full gap-1 mt-4'>
+              <Label htmlFor='message' className='text-left pl-1'>
+                Project technologies
+              </Label>
+              <ToggleGroup
+                type='multiple'
+                variant='outline'
+                className='mt-4 flex-wrap'>
+                {SKILLS.map((item) => (
+                  <ToggleGroupItem
+                    key={item.title}
+                    onClick={() => handleIconSelection(item)}
+                    value={item.title}
+                    aria-label='Toggle bold'>
+                    {item.title}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -124,11 +151,11 @@ const ThumbnailCreator: React.FC = () => {
                 <p className='text-3xl font-bold'>{text}</p>
                 <div className='flex gap-2 mt-2'>
                   {selectedIcons.map((item) => (
-                    <span
+                    <item.icon
                       key={item.title}
-                      className='p-1 bg-gray-800 rounded-full'>
-                      {item.title}
-                    </span>
+                      className='w-6 h-6'
+                      color='red'
+                    />
                   ))}
                 </div>
               </div>
