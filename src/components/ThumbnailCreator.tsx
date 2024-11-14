@@ -26,6 +26,7 @@ import PrismicIcon from '../assets/technologies/prismic.svg?react';
 import RtkIcon from '../assets/technologies/rtk.svg?react';
 import TailwindIcon from '../assets/technologies/tailwind.svg?react';
 import TsIcon from '../assets/technologies/ts.svg?react';
+import Laptop from '../assets/laptop.png';
 
 type Skill = {
   title: string;
@@ -47,10 +48,13 @@ const SKILLS: Skill[] = [
   { title: 'Prismic', icon: PrismicIcon },
 ];
 
+const Colors = ['white', 'gray', 'black'];
+
 const ThumbnailCreator: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [text, setText] = useState<string>('');
   const [selectedIcons, setSelectedIcons] = useState<Skill[]>([]);
+  const [color, setColor] = useState<string>(Colors[0]);
 
   const handleFileUpload = (file: File) => {
     const reader = new FileReader();
@@ -114,9 +118,7 @@ const ThumbnailCreator: React.FC = () => {
             </div>
             {/* Skills selection */}
             <div className='grid w-full gap-1 mt-4'>
-              <Label htmlFor='message' className='text-left pl-1'>
-                Project technologies
-              </Label>
+              <Label className='text-left pl-1'>Project technologies</Label>
               <ToggleGroup
                 type='multiple'
                 variant='outline'
@@ -126,8 +128,26 @@ const ThumbnailCreator: React.FC = () => {
                     key={item.title}
                     onClick={() => handleIconSelection(item)}
                     value={item.title}
-                    aria-label='Toggle bold'>
+                    aria-label={`Toggle ${item.title} selection`}>
                     {item.title}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </div>
+            {/* Color selection */}
+            <div className='grid w-full gap-1 mt-4'>
+              <Label className='text-left pl-1'>Color selection</Label>
+              <ToggleGroup
+                type='single'
+                variant='default'
+                className='mt-4 flex-wrap'>
+                {Colors.map((item) => (
+                  <ToggleGroupItem
+                    key={item}
+                    onClick={() => setColor(item)}
+                    value={item}
+                    aria-label={`Toggle ${color}`}>
+                    {item}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
@@ -139,25 +159,40 @@ const ThumbnailCreator: React.FC = () => {
             <CardTitle>Thumbnail Preview</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='relative border rounded w-full h-64 bg-gray-100 flex items-center justify-center'>
-              {image && (
-                <img
-                  src={image}
-                  alt='Thumbnail background'
-                  className='w-full h-full object-cover rounded'
-                />
-              )}
-              <div className='absolute inset-0 flex flex-col items-center justify-center text-white'>
-                <p className='text-3xl font-bold'>{text}</p>
+            <div className='relative border rounded w-full h-64 flex bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-hidden'>
+              {/* Left Column: Text and Technologies */}
+              <div className='flex flex-col justify-center items-start pl-4 w-[50%] text-left'>
+                <p className='text-3xl font-bold' style={{ color: color }}>
+                  {text}
+                </p>
                 <div className='flex gap-2 mt-2'>
                   {selectedIcons.map((item) => (
                     <item.icon
                       key={item.title}
-                      className='w-6 h-6'
-                      color='red'
+                      className='w-5 h-5'
+                      color={color}
                     />
                   ))}
                 </div>
+              </div>
+
+              {/* Right Column: Laptop Image with Background Image on Screen */}
+              <div className='relative w-[50%]'>
+                {/* Background Image on Laptop Screen */}
+                {image && (
+                  <img
+                    src={image}
+                    alt='Thumbnail background'
+                    className='absolute w-[240px] max-w-[240px] h-[165px] left-[30px] object-cover top-[28px] z-10'
+                  />
+                )}
+
+                {/* Laptop Image with Transparent Screen  -right-7*/}
+                <img
+                  src={Laptop}
+                  alt='Laptop'
+                  className='absolute top-1/2 w-[300px] h-auto -translate-y-1/2 max-w-[300px]'
+                />
               </div>
             </div>
           </CardContent>
