@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { DownloadIcon } from '@radix-ui/react-icons';
+import { toPng } from 'html-to-image';
+import { saveAs } from 'file-saver';
 import { Button } from './ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import {
@@ -27,6 +29,7 @@ import RtkIcon from '../assets/technologies/rtk.svg?react';
 import TailwindIcon from '../assets/technologies/tailwind.svg?react';
 import TsIcon from '../assets/technologies/ts.svg?react';
 import Laptop from '../assets/laptop.png';
+import Logo from '../assets/logo.png';
 
 type Skill = {
   title: string;
@@ -81,14 +84,28 @@ const ThumbnailCreator: React.FC = () => {
 
   // Download thumbnail as image
   const downloadThumbnail = () => {
-    // Render the preview as a canvas or download as-is
-    // For simplicity, we're saving just the background image and overlay
-    console.log('save as');
-    // saveAs(image as string, 'thumbnail.png');
+    const node = document.querySelector(
+      '.thumbnail-preview'
+    ) as HTMLElement | null;
+
+    if (node) {
+      toPng(node, {
+        pixelRatio: 3, // resolution for better quality
+        cacheBust: true,
+      })
+        .then((dataUrl) => {
+          saveAs(dataUrl, 'thumbnail.png'); // Save the image using FileSaver.js
+        })
+        .catch((error) => {
+          console.error('Oops, something went wrong!', error);
+        });
+    } else {
+      console.error('Preview element not found');
+    }
   };
 
   return (
-    <div className='max-w-5xl mx-auto p-4'>
+    <div className='max-w-[1200px] mx-auto p-4'>
       <h1 className='text-xl font-bold mb-5'>Thumbnail Creator</h1>
       <div className='grid grid-cols-2 gap-3'>
         <Card>
@@ -140,15 +157,21 @@ const ThumbnailCreator: React.FC = () => {
               <ToggleGroup
                 type='single'
                 variant='default'
-                className='mt-4 flex-wrap'>
+                className='mt-4 flex-wrap gap-2'>
                 {Colors.map((item) => (
                   <ToggleGroupItem
                     key={item}
+                    style={{
+                      backgroundColor: item,
+                      boxShadow: '1px 1px 5px rgb(228, 228, 231)',
+                      border: `${
+                        color === item ? 'solid rgb(228, 228, 231)' : 'none'
+                      }`,
+                      transform: `${color === item ? 'scale(1.25)' : 'none'}`,
+                    }}
                     onClick={() => setColor(item)}
                     value={item}
-                    aria-label={`Toggle ${color}`}>
-                    {item}
-                  </ToggleGroupItem>
+                    aria-label={`Toggle ${color}`}></ToggleGroupItem>
                 ))}
               </ToggleGroup>
             </div>
@@ -159,13 +182,21 @@ const ThumbnailCreator: React.FC = () => {
             <CardTitle>Thumbnail Preview</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='relative border rounded w-full h-64 flex bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-hidden'>
+            <div className='thumbnail-preview  w-[469px] h-[375px] ml-auto mr-auto relative border rounded flex bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-hidden'>
               {/* Left Column: Text and Technologies */}
-              <div className='flex flex-col justify-center items-start pl-4 w-[50%] text-left'>
-                <p className='text-3xl font-bold' style={{ color: color }}>
-                  {text}
-                </p>
-                <div className='flex gap-2 mt-2'>
+              <div className='flex flex-col justify-between h-full pl-5 w-[45%] text-left'>
+                <img
+                  src={Logo}
+                  className='w-6 h-6 mt-5'
+                  alt='Korobanova logo'
+                />
+                <div className='flex flex-col items-center justify-center h-full'>
+                  <p className='text-3xl font-bold' style={{ color: color }}>
+                    {text}
+                  </p>
+                </div>
+
+                <div className='flex gap-2 mt-4 pb-5 justify-start'>
                   {selectedIcons.map((item) => (
                     <item.icon
                       key={item.title}
@@ -177,21 +208,21 @@ const ThumbnailCreator: React.FC = () => {
               </div>
 
               {/* Right Column: Laptop Image with Background Image on Screen */}
-              <div className='relative w-[50%]'>
+              <div className='relative w-[55%] opacity-90'>
                 {/* Background Image on Laptop Screen */}
                 {image && (
                   <img
                     src={image}
                     alt='Thumbnail background'
-                    className='absolute w-[240px] max-w-[240px] h-[165px] left-[30px] object-cover top-[28px] z-10'
+                    className='absolute w-[260px] max-w-max h-[163px] left-[25px] object-left-top object-cover top-1/2 -translate-y-1/2 -mt-[5px] z-10'
                   />
                 )}
 
-                {/* Laptop Image with Transparent Screen  -right-7*/}
+                {/* Laptop Image with Transparent Screen */}
                 <img
                   src={Laptop}
                   alt='Laptop'
-                  className='absolute top-1/2 w-[300px] h-auto -translate-y-1/2 max-w-[300px]'
+                  className='absolute top-1/2 w-[350px] h-auto -translate-y-1/2 max-w-max -ml-[20px]'
                 />
               </div>
             </div>
