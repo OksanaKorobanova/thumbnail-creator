@@ -1,8 +1,8 @@
 # Thumbnail Creator
 
-Thumbnail Creator is a web-based application that allows users to design and export professional thumbnails for portfolio projects. With an intuitive interface and customizable features, it simplifies creating visually appealing images for showcasing work. Developed for personal use at Upwork.
+Thumbnail Creator is a web-based application that allows users to design and export professional thumbnails for portfolio projects. With an intuitive interface and customizable features, it simplifies creating visually appealing images for showcasing work. Developed for personal use at Upwork
 
-![Thumbnail Creator Preview](./thumbnailCreator.jpg)
+![Thumbnail Creator Preview](https://raw.githubusercontent.com/OksanaKorobanova/thumbnail-creator/refs/heads/master/public/thumbnailCreator.jpg)
 
 ## Features
 
@@ -12,7 +12,7 @@ Thumbnail Creator is a web-based application that allows users to design and exp
 - **Live Preview**: See how the thumbnail will look as you make changes.
 - **High-Resolution Export**: Download the final thumbnail as a high-quality image (938x750px).
 
-![Exported Thumbnail](./thumbnail.png)
+![Exported Thumbnail](https://raw.githubusercontent.com/OksanaKorobanova/thumbnail-creator/refs/heads/master/public/thumbnail.png)
 
 ## Tools & Technologies
 
