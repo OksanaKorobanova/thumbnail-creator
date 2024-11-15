@@ -1,50 +1,30 @@
-# React + TypeScript + Vite
+# Thumbnail Creator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Thumbnail Creator is a web-based application that allows users to design and export professional thumbnails for portfolio projects. With an intuitive interface and customizable features, it simplifies creating visually appealing images for showcasing work. Developed for personal use at Upwork.
 
-Currently, two official plugins are available:
+![Thumbnail Creator Preview](./thumbnailCreator.jpg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Custom Background**: Upload an image to use as the thumbnail’s background.
+- **Dynamic Text**: Add a project title, adjust its color, and preview it in real-time.
+- **Icon Selection**: Choose from a range of technology icons to display on the thumbnail.
+- **Live Preview**: See how the thumbnail will look as you make changes.
+- **High-Resolution Export**: Download the final thumbnail as a high-quality image (938x750px).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![Exported Thumbnail](./thumbnail.png)
 
-- Configure the top-level `parserOptions` property like this:
+## Tools & Technologies
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This project leverages modern web development tools to ensure performance and usability:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **React.js**: For building the user interface.
+- **TypeScript**: For type safety and better code maintainability.
+- **TailwindCSS**: For responsive and modern styling.
+- **ShadCN UI**: For pre-styled UI components.
+- **FileSaver.js**: To facilitate image downloading.
+- **html-to-image**: For rendering the preview as a downloadable image.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## License
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+This project is licensed under the MIT License.
