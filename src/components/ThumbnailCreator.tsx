@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DownloadIcon } from '@radix-ui/react-icons';
 import { toPng } from 'html-to-image';
 import { saveAs } from 'file-saver';
@@ -58,6 +58,27 @@ const ThumbnailCreator: React.FC = () => {
   const [text, setText] = useState<string>('');
   const [selectedIcons, setSelectedIcons] = useState<Skill[]>([]);
   const [color, setColor] = useState<string>(Colors[0]);
+
+  // Load data from localStorage
+  useEffect(() => {
+    const savedImage = localStorage.getItem('thumbnailImage');
+    const savedText = localStorage.getItem('thumbnailText');
+    const savedIcons = localStorage.getItem('thumbnailIcons');
+    const savedColor = localStorage.getItem('thumbnailColor');
+
+    if (savedImage) setImage(savedImage);
+    if (savedText) setText(savedText);
+    if (savedIcons) setSelectedIcons(JSON.parse(savedIcons));
+    if (savedColor) setColor(savedColor);
+  }, []);
+
+  // Save data to localStorage
+  useEffect(() => {
+    localStorage.setItem('thumbnailImage', image || '');
+    localStorage.setItem('thumbnailText', text);
+    localStorage.setItem('thumbnailIcons', JSON.stringify(selectedIcons));
+    localStorage.setItem('thumbnailColor', color);
+  }, [image, text, selectedIcons, color]);
 
   const handleFileUpload = (file: File) => {
     const reader = new FileReader();
@@ -214,7 +235,7 @@ const ThumbnailCreator: React.FC = () => {
                   <img
                     src={image}
                     alt='Thumbnail background'
-                    className='absolute w-[260px] max-w-max h-[163px] left-[25px] object-left-top object-cover top-1/2 -translate-y-1/2 -mt-[5px] z-10'
+                    className='absolute w-[260px] max-w-max h-[165px] left-[22px] object-left-top object-cover top-1/2 -translate-y-1/2 -mt-[5px] z-10'
                   />
                 )}
 
